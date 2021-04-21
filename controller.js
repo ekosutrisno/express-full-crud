@@ -7,8 +7,8 @@ exports.index = function (req, res) {
   response.ok("Hello from the Node JS RESTful side!", res);
 };
 
-const getUsers = (request, response) => {
-  pool.query("SELECT * FROM users ORDER BY id ASC", (error, results) => {
+const getProduks = (request, response) => {
+  pool.query("SELECT * FROM produk ORDER BY id ASC", (error, results) => {
     if (error) {
       throw error;
     }
@@ -16,10 +16,10 @@ const getUsers = (request, response) => {
   });
 };
 
-const getUserById = (request, response) => {
+const getProdukById = (request, response) => {
   const id = parseInt(request.params.id);
 
-  pool.query("SELECT * FROM users WHERE id = $1", [id], (error, results) => {
+  pool.query("SELECT * FROM produk WHERE id = $1", [id], (error, results) => {
     if (error) {
       throw error;
     }
@@ -27,52 +27,52 @@ const getUserById = (request, response) => {
   });
 };
 
-const createUser = (request, response) => {
-  const { name, email } = request.body;
+const createProduk = (request, response) => {
+  const { nama_produk, keterangan, harga, jumlah } = request.body;
 
   pool.query(
-    "INSERT INTO users (name, email) VALUES ($1, $2)",
-    [name, email],
+    "INSERT INTO produk (nama_produk, keterangan, harga, jumlah) VALUES ($1, $2, $3, $4)",
+    [nama_produk, keterangan, harga, jumlah],
     (error, results) => {
       if (error) {
         throw error;
       }
-      response.status(201).send(`User has been Added!`);
+      response.status(201).send(`Produk has been Added!`);
     }
   );
 };
 
-const updateUser = (request, response) => {
+const updateProduk = (request, response) => {
   const id = parseInt(request.params.id);
-  const { name, email } = request.body;
+  const { nama_produk, keterangan, harga, jumlah } = request.body;
 
   pool.query(
-    "UPDATE users SET name = $1, email = $2 WHERE id = $3",
-    [name, email, id],
+    "UPDATE produk SET nama_produk = $1, keterangan = $2, harga = $3, jumlah = $4 WHERE id = $5",
+    [nama_produk, keterangan, harga, jumlah, id],
     (error, results) => {
       if (error) {
         throw error;
       }
-      response.status(200).send(`User modified with ID: ${id}`);
+      response.status(200).send(`Produk modified with ID: ${id}`);
     }
   );
 };
 
-const deleteUser = (request, response) => {
+const deleteProduk = (request, response) => {
   const id = parseInt(request.params.id);
 
-  pool.query("DELETE FROM users WHERE id = $1", [id], (error, results) => {
+  pool.query("DELETE FROM produk WHERE id = $1", [id], (error, results) => {
     if (error) {
       throw error;
     }
-    response.status(200).send(`User deleted with ID: ${id}`);
+    response.status(200).send(`Produk deleted with ID: ${id}`);
   });
 };
 
 module.exports = {
-  getUsers,
-  getUserById,
-  createUser,
-  updateUser,
-  deleteUser,
+  getProduks,
+  getProdukById,
+  createProduk,
+  updateProduk,
+  deleteProduk,
 };

@@ -3,9 +3,9 @@
 module.exports = function (app) {
   var db = require("./controller");
 
-  app.get("/users", db.getUsers);
-  app.get("/users/:id", db.getUserById);
-  app.post("/users", db.createUser);
-  app.put("/users/:id", db.updateUser);
-  app.delete("/users/:id", db.deleteUser);
+  app.get("/produks", db.getProduks);
+  app.get("/Produks/:id", db.getProdukById);
+  app.post("/Produks", db.createProduk);
+  app.put("/Produks/:id", db.updateProduk);
+  app.delete("/Produks/:id", db.deleteProduk);
 };
